@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
+
 import "package:flutter/material.dart";
 
 void main() => runApp(const MyApp());
@@ -21,8 +23,7 @@ class Iskele extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-            "Calculator"), // appBar başlığı olacak bu uygulamada görünecek olan kısım scaffold = iskele!
+        title: const Text("Calculator"),
       ),
       body: const AnaEkran(),
     );
@@ -37,8 +38,74 @@ class AnaEkran extends StatefulWidget {
 }
 
 class _AnaEkranState extends State<AnaEkran> {
+  dynamic sayi1, sayi2, sonuc;
+
+  TextEditingController t1 = TextEditingController(
+      text: "0"); // textfield içindeki metinleri okuyabilecek!
+  TextEditingController t2 = TextEditingController(text: "0");
+
+  void sayiTopla() {
+    setState(() {
+      sayi1 = num.parse(t1.text);
+      sayi2 = num.parse(t2.text);
+      sonuc = sayi1 + sayi2;
+    }); // state güncellendiğinde ekran yenilensin diye bunu kullanırız.
+  }
+
+  void sayiCikar() {
+    setState(() {
+      sayi1 = num.parse(t1.text);
+      sayi2 = num.parse(t2.text);
+      sonuc = sayi1 - sayi2;
+    }); // state güncellendiğinde ekran yenilensin diye bunu kullanırız.
+  }
+
+  void sayiCarp() {
+    setState(() {
+      sayi1 = num.parse(t1.text);
+      sayi2 = num.parse(t2.text);
+      sonuc = sayi1 * sayi2;
+    }); // state güncellendiğinde ekran yenilensin diye bunu kullanırız.
+  }
+
+  void sayiBol() {
+    setState(() {
+      sayi1 = num.parse(t1.text);
+      sayi2 = num.parse(t2.text);
+      sonuc = sayi1 / sayi2;
+    }); // state güncellendiğinde ekran yenilensin diye bunu kullanırız.
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            Text("$sonuc"),
+            TextField(controller: t1),
+            TextField(
+              controller: t2,
+            ),
+            ElevatedButton(
+              onPressed: sayiTopla,
+              child: Text("Topla"),
+            ),
+            ElevatedButton(
+              onPressed: sayiCikar,
+              child: Text("Çıkar"),
+            ),
+            ElevatedButton(
+              onPressed: sayiCarp,
+              child: Text("Çarp"),
+            ),
+            ElevatedButton(
+              onPressed: sayiBol,
+              child: Text("Böl"),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
